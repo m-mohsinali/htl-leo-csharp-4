@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build-and-deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the Code
+        uses: actions/checkout@v2
+        
+        # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+      
+      - name : restore depenadency
+        run : dotnet restore
+        
+              
+      - name : Build app 
+        run : dotnet build -c Release --no-restore
+      
